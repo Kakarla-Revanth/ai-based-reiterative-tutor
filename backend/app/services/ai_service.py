@@ -27,7 +27,7 @@ class AIService:
                 return generated
 
         if openai_api_key:
-            generated = await self._generate_with_openai(payload, openai_api_key)
+            generated = await self._generate_with_openai(payload, openai_api_key, gemini_api_key=gemini_api_key)
             if generated:
                 return generated
 
@@ -71,7 +71,7 @@ class AIService:
         parsed = self._extract_json_object(raw_text)
         return await self._modules_from_payload(parsed, payload, gemini_api_key=gemini_api_key)
 
-    async def _generate_with_openai(self, payload: GenerateModulesRequest, openai_api_key: str) -> list[ModuleSchema]:
+    async def _generate_with_openai(self, payload: GenerateModulesRequest, openai_api_key: str, gemini_api_key: str = "") -> list[ModuleSchema]:
         prompt = f"""
         Create 5 teaching modules as JSON for the topic "{payload.topic}".
         Each module must include:
@@ -114,7 +114,7 @@ class AIService:
             return []
 
         parsed = self._extract_json_object(raw_text)
-        return await self._modules_from_payload(parsed, payload, gemini_api_key="")
+        return await self._modules_from_payload(parsed, payload, gemini_api_key=gemini_api_key)
 
     def _generate_fallback_modules(self, payload: GenerateModulesRequest) -> list[ModuleSchema]:
         style_hint = {

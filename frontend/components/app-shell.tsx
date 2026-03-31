@@ -177,6 +177,7 @@ export function AppShell() {
           <div className="space-y-6">
             <AuthPanel
               error={error}
+              language={uiLanguage}
               loading={authLoading}
               mode={authMode}
               onLogin={async (payload) => {

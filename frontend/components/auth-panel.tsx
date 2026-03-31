@@ -16,6 +16,7 @@ export function AuthPanel({
   mode,
   loading,
   error,
+  language = "English",
   onModeChange,
   onLogin,
   onSignup
@@ -23,6 +24,7 @@ export function AuthPanel({
   mode: AuthMode;
   loading: boolean;
   error: string;
+  language?: string;
   onModeChange: (mode: AuthMode) => void;
   onLogin: (payload: { email: string; password: string }) => Promise<void>;
   onSignup: (payload: {
@@ -53,7 +55,7 @@ export function AuthPanel({
     email: "",
     password: ""
   });
-  const { t } = useUiCopy(mode === "signup" ? signupForm.language : "English");
+  const { t } = useUiCopy(mode === "signup" ? signupForm.language : language);
 
   return (
     <Card className="max-w-xl border-border/70 bg-card text-foreground shadow-none">
